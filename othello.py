@@ -22,73 +22,73 @@ while flag == 0:                                 #プログラム全体のルー
 # 表示部 ----------------------------------------------------------------------
         print('  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15')
         print('----------------------------------------------')
-        for loop_count in range(15):
-            if map[loop_count] == 2:
+        for loop_count in range(15):            #コマ表示用に15回ループ
+            if map[loop_count] == 2:            #コマがあるかどうか判定
                 print('|  ',end='')
-            elif map[loop_count] == 0:
+            elif map[loop_count] == 0:          #コマが白かどうかを判定
                 print('|● ',end='')
             elif map[loop_count] == 1:
-                print('|〇',end='')
+                print('|〇',end='')             #コマが黒かどうかを判定
         print('|')
         print('----------------------------------------------')
 # 入力部 ----------------------------------------------------------------------
         print(pieces[player] + "さんの番です。何処にコマを置きますか？")
-        while 1:
-            input_pointer = input('→')
+        while 1:                                #入力ミスした時用のループ
+            input_pointer = input('→')          #数値を入力してもらう
             pointer = int(input_pointer) - 1
-            if pointer >= 0 and pointer <= 14:
-                if map[pointer] == 2:
-                    map[pointer] = player
+            if pointer >= 0 and pointer <= 14:  #入力された値がマップ内か判定
+                if map[pointer] == 2:           #入力された場所が空白か判定
+                    map[pointer] = player       #空白だった場合コマを配置
                     break
-                elif map[pointer] == 0 or map[pointer] == 1:
+                elif map[pointer] == 0 or map[pointer] == 1:#空白以外だった場合の判定
                     print("既に" + pieces[player] + 'が配置されています。再入力して下さい。')
-            else:
+            else:                               #数値以外を入力した場合下記を表示する
                 print("入力にミスがありました。再入力して下さい。")
 # 左の石の状況を調べ、ひっくり返す ----------------------------------------------
-        if pointer - 1 >= 0:
-            if map[pointer - 1] == next_player:
-                check = pointer - 2
-                while 1:
-                    if check < 0:
+        if pointer - 1 >= 0:                    #マップ外に出ていないかを判定
+            if map[pointer - 1] == next_player: #左の石が相手のコマを判定
+                check = pointer - 2             #今どこにいるのかのポインタ
+                while 1:                        #複数個ひっくり返すためのループ
+                    if check < 0:               #ポインタがマップ外に出ていないか判定
                         break
-                    if map[check] == player:
-                        while map[check + 1] == next_player:
-                            map[check + 1] = player
-                            check += 1
+                    if map[check] == player:    #次に自分が来たかを判定
+                        while map[check + 1] == next_player:#挟んだコマをひっくり返すまで回す
+                            map[check + 1] = player#ポインタから一つ右のコマをひっくり返す
+                            check += 1          #ポインタを進める
                         break
-                    elif map[check] == next_player:
-                        check -=1
-                    else:
+                    elif map[check] == next_player:#次に相手のコマが来たか判定
+                        check -=1               #ポインタを進める
+                    else:                       #それ以外だった場合ループをやめる
                         break
 # 右の石の状況を調べ、ひっくり返す ----------------------------------------------
-        if pointer + 1 < 14:
-            if map[pointer + 1] == next_player:
-                check = pointer + 2
-                while 1:
-                    if check > 14:
+        if pointer + 1 < 14:                    #マップ外に出ていないかを判定
+            if map[pointer + 1] == next_player: #右の石が相手のコマを判定
+                check = pointer + 2             #今どこにいるのかのポインタ
+                while 1:                        #複数個ひっくり返すためのループ
+                    if check > 14:              #ポインタがマップ外に出ていないか判定
                         break
-                    if map[check] == player:
-                        while map[check - 1] == next_player:
-                            map[check - 1] = player
-                            check -= 1
+                    if map[check] == player:    #次に自分が来たかを判定
+                        while map[check - 1] == next_player:#挟んだコマをひっくり返すまで回す
+                            map[check - 1] = player#ポインタから一つ左のコマをひっくり返す
+                            check -= 1          #ポインタを進める
                         break
-                    elif map[check] == next_player:
-                        check +=1
-                    else:
+                    elif map[check] == next_player:#次に相手のコマが来たか判定
+                        check +=1               #ポインタを進める
+                    else:                       #それ以外だった場合ループをやめる
                         break
 # プレイヤーの手番変更 ---------------------------------------------------------
         val = player
         player = next_player
         next_player = val
 # ゲーム終了するかの判定 -------------------------------------------------------
-        white_piece = 0
+        white_piece = 0                         #初期化
         black_piece = 0
-        for loop_count in range(15):
-            if map[loop_count] == 0:
+        for loop_count in range(15):            #15ループしてコマの数を数える
+            if map[loop_count] == 0:            #白のコマの数を数える
                 white_piece += 1
-            elif map[loop_count] == 1:
+            elif map[loop_count] == 1:          #黒のコマの数を数える
                 black_piece += 1
-        if (white_piece + black_piece) >= 15:
+        if (white_piece + black_piece) >= 15:   #コマの合計が15以上なら終了
             break
 # 表示部 ----------------------------------------------------------------------
     print('  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15')
@@ -102,22 +102,22 @@ while flag == 0:                                 #プログラム全体のルー
             print('|〇',end='')
     print('|')
     print('----------------------------------------------')
-    if (white_piece + black_piece) >= 15:
-        if white_piece > black_piece:
+    if (white_piece + black_piece) >= 15:       #コマの合計が15個以上か判定
+        if white_piece > black_piece:           #どちらのコマが多いか判定
             print("●の勝ち！")
         else:
             print("〇の勝ち！")
 # ゲームを続けるのか判定 -------------------------------------------------------
     print("ゲームを続けますか？")
     print("Y : YES / N : NO")
-    while 1:
+    while 1:                                    #入力ミスした時用のループ
         choice = input("→")
-        if choice == 'Y' or choice == 'y':
+        if choice == 'Y' or choice == 'y':      #入力された値がYだった場合続行
             break
-        elif choice == 'N' or choice == 'n':
-            flag = 1
+        elif choice == 'N' or choice == 'n':    #入力された値がNだった場合終了
+            flag = 1                            #全体のループの終了
             break
-        else:
+        else:                                   #入力ミスした場合下記を表示
             print("入力にミスがありました。再入力して下さい。")
 # ----------------------------------------------------------------------------
 #              Copyright HAL College of Technology & Design
